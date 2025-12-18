@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>VetCare</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/style.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- FullCalendar -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+</head>
+<body>
+  <div class="sidebar" id="sidebar">
+    <h2>VetCare</h2>
+    {% if session.role == "owner" %}
+      <a href="/dashboard">🏠 Dashboard</a>
+      <a href="/request">➕ Request Appointment</a>
+      <a href="/calendar">📅 Calendar</a>
+      <a href="/logout">🚪 Logout</a>
+    {% elif session.role == "vet" %}
+      <a href="/dashboard">🏠 Dashboard</a>
+      <a href="/vaccination">💉 Add Vaccination</a>
+      <a href="/analytics">📊 Analytics</a>
+      <a href="/calendar">📅 Calendar</a>
+      <a href="/logout">🚪 Logout</a>
+    {% endif %}
+    <a href="javascript:void(0);" class="toggle-btn" onclick="toggleSidebar()">☰</a>
+  </div>
+
+  <div class="main-content" id="main">
+    {% block content %}{% endblock %}
+  </div>
+
+<script>
+function toggleSidebar() {
+  document.getElementById("sidebar").classList.toggle("collapsed");
+  document.getElementById("main").classList.toggle("expanded");
+}
+</script>
+</body>
+</html>

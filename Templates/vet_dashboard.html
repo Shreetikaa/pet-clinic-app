@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="main-content">
+  <h1>Vet Admin Dashboard</h1>
+  <h2>All Appointments</h2>
+
+  <div class="grid">
+    {% for a in appointments %}
+      <div class="card">
+        <h3>{{ a.pet_name }} ({{ a.owner }})</h3>
+        <p><strong>Date:</strong> {{ a.date }}</p>
+        <p><strong>Reason:</strong> {{ a.reason }}</p>
+        <span class="status {{ a.status }}">{{ a.status }}</span>
+        <br><br>
+
+        {% if a.status == "Pending" %}
+          <a href="/update/{{ a.id }}/Approved">✅ Approve</a> |
+          <a href="/update/{{ a.id }}/Rejected">❌ Reject</a>
+        {% endif %}
+        <br><br>
+        <a href="/report/{{ a.pet_name }}">📄 Download Report</a>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

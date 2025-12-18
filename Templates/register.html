@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+<h2>Register</h2>
+<form method="post">
+<input name="username">
+<input type="password" name="password">
+<select name="role">
+<option value="owner">Pet Owner</option>
+<option value="vet">Vet Admin</option>
+</select>
+<button>Register</button>
+</form>
+</div>
+{% endblock %}

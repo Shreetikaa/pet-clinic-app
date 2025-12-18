@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="main-content">
+  <h1>Welcome, {{ session.user }}</h1>
+  <h2>Your Appointments</h2>
+
+  <div class="grid">
+    {% for a in appointments %}
+      <div class="card">
+        <h3>{{ a.pet_name }}</h3>
+        <p><strong>Date:</strong> {{ a.date }}</p>
+        <p><strong>Reason:</strong> {{ a.reason }}</p>
+        <span class="status {{ a.status }}">{{ a.status }}</span>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
