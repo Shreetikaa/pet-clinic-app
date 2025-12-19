@@ -1,28 +1,40 @@
 {% extends 'base.html' %}
 {% block content %}
+<h1 class="text-3xl font-bold mb-6">Vet Clinic Management</h1>
 
-<div class="main-content">
-  <h1>Vet Admin Dashboard</h1>
-  <h2>All Appointments</h2>
-
-  <div class="grid">
-    {% for a in appointments %}
-      <div class="card">
-        <h3>{{ a.pet_name }} ({{ a.owner }})</h3>
-        <p><strong>Date:</strong> {{ a.date }}</p>
-        <p><strong>Reason:</strong> {{ a.reason }}</p>
-        <span class="status {{ a.status }}">{{ a.status }}</span>
-        <br><br>
-
-        {% if a.status == "Pending" %}
-          <a href="/update/{{ a.id }}/Approved">✅ Approve</a> |
-          <a href="/update/{{ a.id }}/Rejected">❌ Reject</a>
-        {% endif %}
-        <br><br>
-        <a href="/report/{{ a.pet_name }}">📄 Download Report</a>
-      </div>
-    {% endfor %}
-  </div>
+<div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <table class="w-full text-left">
+        <thead class="bg-gray-50 text-gray-400 text-xs uppercase font-bold">
+            <tr>
+                <th class="px-8 py-4">Owner</th>
+                <th class="px-8 py-4">Pet</th>
+                <th class="px-8 py-4">Type</th>
+                <th class="px-8 py-4">Status</th>
+                <th class="px-8 py-4">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+            {% for a in appointments %}
+            <tr>
+                <td class="px-8 py-6">{{ a.owner }}</td>
+                <td class="px-8 py-6 font-bold">{{ a.pet_name }}</td>
+                <td class="px-8 py-6 text-sm">{{ a.appt_type }}</td>
+                <td class="px-8 py-6">
+                    <span class="px-3 py-1 rounded-full text-xs font-bold {% if a.status == 'Approved' %}bg-green-100 text-green-700{% else %}bg-yellow-100 text-yellow-700{% endif %}">
+                        {{ a.status }}
+                    </span>
+                </td>
+                <td class="px-8 py-6">
+                    {% if a.status == 'Pending' %}
+                    <a href="{{ url_for('update_status', appt_id=a.id, status='Approved') }}" class="text-green-600 font-bold hover:underline mr-4">Approve</a>
+                    <a href="{{ url_for('update_status', appt_id=a.id, status='Rejected') }}" class="text-red-600 font-bold hover:underline">Reject</a>
+                    {% else %}
+                    <span class="text-gray-400 italic text-sm">Actioned</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
-
 {% endblock %}

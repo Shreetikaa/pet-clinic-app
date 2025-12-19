@@ -1,44 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>VetCare</title>
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/static/style.css">
-
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- FullCalendar -->
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+    <meta charset="UTF-8">
+    <title>VetCare Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAF9; margin: 0; }
+    </style>
 </head>
-<body>
-  <div class="sidebar" id="sidebar">
-    <h2>VetCare</h2>
-    {% if session.role == "owner" %}
-      <a href="/dashboard">🏠 Dashboard</a>
-      <a href="/request">➕ Request Appointment</a>
-      <a href="/calendar">📅 Calendar</a>
-      <a href="/logout">🚪 Logout</a>
-    {% elif session.role == "vet" %}
-      <a href="/dashboard">🏠 Dashboard</a>
-      <a href="/vaccination">💉 Add Vaccination</a>
-      <a href="/analytics">📊 Analytics</a>
-      <a href="/calendar">📅 Calendar</a>
-      <a href="/logout">🚪 Logout</a>
+<body class="flex min-h-screen">
+    {% if session['user'] %}
+    <aside class="w-64 bg-white border-r border-gray-100 flex flex-col p-6 fixed h-full">
+        <div class="text-2xl font-bold text-green-700 mb-10">🐾 VetCare</div>
+        <nav class="flex-1 space-y-2">
+            <a href="/dashboard" class="block p-3 hover:bg-green-50 rounded-xl text-gray-600 font-semibold">Dashboard</a>
+            <a href="/calendar" class="block p-3 hover:bg-green-50 rounded-xl text-gray-600 font-semibold">Calendar</a>
+        </nav>
+        <a href="/logout" class="p-3 text-red-500 font-bold">Logout</a>
+    </aside>
+
+    <main class="flex-1 ml-64 p-10">
+        {% block content %}{% endblock %}
+    </main>
+    
+    {% else %}
+    <main class="w-full flex items-center justify-center">
+        <div class="w-full max-w-md">
+            {% block auth_content %}{% endblock %}
+        </div>
+    </main>
     {% endif %}
-    <a href="javascript:void(0);" class="toggle-btn" onclick="toggleSidebar()">☰</a>
-  </div>
-
-  <div class="main-content" id="main">
-    {% block content %}{% endblock %}
-  </div>
-
-<script>
-function toggleSidebar() {
-  document.getElementById("sidebar").classList.toggle("collapsed");
-  document.getElementById("main").classList.toggle("expanded");
-}
-</script>
 </body>
 </html>

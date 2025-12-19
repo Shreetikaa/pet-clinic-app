@@ -1,12 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="card">
-<h2>Request Appointment</h2>
-<form method="post">
-<input name="pet">
-<input type="date" name="date">
-<input name="reason">
-<button>Submit</button>
-</form>
+<div class="max-w-2xl mx-auto">
+    <div class="mb-8">
+        <h1 class="text-3xl font-extrabold text-gray-900">Book Appointment</h1>
+        <p class="text-gray-500">Schedule a visit with our expert veterinarians.</p>
+    </div>
+
+    <div class="bg-white p-10 rounded-[32px] shadow-sm border border-gray-100">
+        <form action="/request" method="POST" class="space-y-6">
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">Pet Name</label>
+                <input type="text" name="pet_name" placeholder="e.g. Buddy" class="w-full p-4 rounded-2xl bg-gray-50 border-none focus:ring-2 focus:ring-green-500 outline-none transition" required>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">Preferred Date</label>
+                <input type="date" name="date" class="w-full p-4 rounded-2xl bg-gray-50 border-none focus:ring-2 focus:ring-green-500 outline-none transition" required>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">Reason for Visit</label>
+                <textarea name="reason" rows="3" placeholder="Describe the checkup needed..." class="w-full p-4 rounded-2xl bg-gray-50 border-none focus:ring-2 focus:ring-green-500 outline-none transition" required></textarea>
+            </div>
+
+            <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold p-4 rounded-2xl transition-all shadow-lg shadow-green-100 flex items-center justify-center gap-2">
+                <i class="ri-calendar-check-line"></i> Confirm Request
+            </button>
+        </form>
+    </div>
 </div>
 {% endblock %}

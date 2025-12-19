@@ -1,20 +1,55 @@
 {% extends 'base.html' %}
 {% block content %}
-
-<div class="main-content">
-  <h1>Welcome, {{ session.user }}</h1>
-  <h2>Your Appointments</h2>
-
-  <div class="grid">
-    {% for a in appointments %}
-      <div class="card">
-        <h3>{{ a.pet_name }}</h3>
-        <p><strong>Date:</strong> {{ a.date }}</p>
-        <p><strong>Reason:</strong> {{ a.reason }}</p>
-        <span class="status {{ a.status }}">{{ a.status }}</span>
-      </div>
-    {% endfor %}
-  </div>
+<div class="flex justify-between items-center mb-10">
+    <div>
+        <h1 class="text-3xl font-extrabold text-gray-900">Pet Dashboard</h1>
+        <p class="text-gray-500">Welcome, {{ session['user'] }}</p>
+    </div>
+    <div class="flex gap-3">
+        <a href="/request" class="bg-green-600 text-white px-5 py-3 rounded-2xl font-bold hover:bg-green-700 transition shadow-lg">+ General Visit</a>
+        <a href="/book-vaccination" class="bg-blue-600 text-white px-5 py-3 rounded-2xl font-bold hover:bg-blue-700 transition shadow-lg">💉 Vaccination</a>
+    </div>
 </div>
 
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+    <div class="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm">
+        <div class="text-blue-600 bg-blue-50 w-14 h-14 rounded-2xl flex items-center justify-center mb-4">
+            <i class="ri-file-list-3-line text-3xl"></i>
+        </div>
+        <h3 class="text-gray-400 font-bold text-xs uppercase tracking-widest">Total Visits</h3>
+        <p class="text-[10px] text-gray-400 mb-2">Reports Uploaded by Vet</p>
+        <div class="text-4xl font-black text-gray-900">{{ total_visits }}</div>
+    </div>
+
+    <div class="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm">
+        <div class="text-green-600 bg-green-50 w-14 h-14 rounded-2xl flex items-center justify-center mb-4">
+            <i class="ri-calendar-check-line text-3xl"></i>
+        </div>
+        <h3 class="text-gray-400 font-bold text-xs uppercase tracking-widest">Appointments</h3>
+        <p class="text-[10px] text-gray-400 mb-2">Upcoming Booked Slots</p>
+        <div class="text-4xl font-black text-gray-900">{{ num_appointments }}</div>
+    </div>
+</div>
+
+<div class="bg-white rounded-[32px] border border-gray-100 overflow-hidden">
+    <table class="w-full text-left">
+        <thead class="bg-gray-50 text-gray-400 text-xs uppercase font-bold">
+            <tr><th class="px-8 py-5">Pet</th><th class="px-8 py-5">Type</th><th class="px-8 py-5">Date</th><th class="px-8 py-5">Status</th></tr>
+        </thead>
+        <tbody class="divide-y divide-gray-50">
+            {% for a in appointments %}
+            <tr class="hover:bg-gray-50">
+                <td class="px-8 py-6 font-bold text-gray-900">{{ a.pet_name }}</td>
+                <td class="px-8 py-6 text-sm text-gray-500">{{ a.appt_type }}</td>
+                <td class="px-8 py-6 text-gray-500">{{ a.date }}</td>
+                <td class="px-8 py-6">
+                    <span class="px-4 py-1 rounded-full text-xs font-bold {% if a.status == 'Approved' %}bg-green-50 text-green-600{% else %}bg-yellow-50 text-yellow-600{% endif %}">
+                        {{ a.status }}
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

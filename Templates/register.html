@@ -1,15 +1,37 @@
 {% extends 'base.html' %}
-{% block content %}
-<div class="card">
-<h2>Register</h2>
-<form method="post">
-<input name="username">
-<input type="password" name="password">
-<select name="role">
-<option value="owner">Pet Owner</option>
-<option value="vet">Vet Admin</option>
-</select>
-<button>Register</button>
-</form>
+{% block auth_content %}
+<div class="bg-white p-10 rounded-[32px] shadow-xl border border-gray-100">
+    <div class="text-center mb-8">
+        <h2 class="text-3xl font-extrabold text-gray-900 mb-2">Create Account</h2>
+        <p class="text-gray-500">Join the community and manage your pets.</p>
+    </div>
+
+    <form method="POST" class="space-y-5">
+        <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2">Username</label>
+            <input type="text" name="username" placeholder="Enter your name" class="w-full p-4 rounded-2xl bg-gray-50 border-none focus:ring-2 focus:ring-green-500 outline-none transition" required>
+        </div>
+        
+        <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2">Password</label>
+            <input type="password" name="password" placeholder="••••••••" class="w-full p-4 rounded-2xl bg-gray-50 border-none focus:ring-2 focus:ring-green-500 outline-none transition" required>
+        </div>
+
+        <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2">I am a...</label>
+            <select name="role" class="w-full p-4 rounded-2xl bg-gray-50 border-none focus:ring-2 focus:ring-green-500 outline-none transition cursor-pointer">
+                <option value="owner">Pet Owner</option>
+                <option value="vet">Veterinarian</option>
+            </select>
+        </div>
+
+        <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold p-4 rounded-2xl transition-all shadow-lg shadow-green-100 mt-4">
+            Register Now
+        </button>
+    </form>
+
+    <div class="mt-6 text-center">
+        <a href="/" class="text-green-600 font-bold hover:underline text-sm">Already have an account? Login</a>
+    </div>
 </div>
 {% endblock %}

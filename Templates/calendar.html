@@ -1,56 +1,31 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Appointment Calendar</h2>
-<div id="calendar"></div>
+<div class="mb-8">
+    <h1 class="text-3xl font-extrabold text-gray-900">Schedule</h1>
+</div>
 
-{# 1. Pass the data to a hidden script tag as JSON #}
-<script id="calendar-data" type="application/json">
-  [
-    {% for a in appointments %}
-    {
-      "title": {{ (a.pet_name ~ " (" ~ a.status ~ ")")|tojson }},
-      "start": {{ a.date|tojson }},
-      "status": {{ a.status|tojson }}
-    }{% if not loop.last %},{% endif %}
-    {% endfor %}
-  ]
-</script>
+<div class="bg-white p-8 rounded-[32px] shadow-sm border border-gray-100 min-h-[600px]">
+    <div id="calendar"></div>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  function getColor(status) {
-    const s = String(status).toLowerCase();
-    switch(s) {
-      case 'pending': return '#ffeaa7';   
-      case 'approved': return '#55efc4';  
-      case 'rejected': return '#fab1a0';  
-      default: return '#dfe6e9';          
-    }
-  }
-
-  //  Parse the JSON data from the hidden tag
-  const jsonData = document.getElementById('calendar-data').textContent;
-  const rawEvents = JSON.parse(jsonData);
-
-  //  Map the events to include the colors
-  const events = rawEvents.map(e => ({
-    title: e.title,
-    start: e.start,
-    color: getColor(e.status)
-  }));
-
-  const calendarEl = document.getElementById('calendar');
-  const calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'dayGridMonth',
-    events: events,
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay'
-    }
-  });
-  
-  calendar.render();
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        height: 600,
+        events: [
+            {% for a in appointments %}
+            {
+                title: "{{ a.pet_name }}",
+                start: "{{ a.date }}",
+                color: "{% if a.status == 'Approved' %}#10B981{% else %}#F59E0B{% endif %}"
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ]
+    });
+    calendar.render();
 });
 </script>
 {% endblock %}

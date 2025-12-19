@@ -6,5 +6,5 @@ class Config:
     # Email 
     MAIL_SERVER = "smtp.gmail.com"
     MAIL_PORT = 465
-    MAIL_USERNAME = "your_email@gmail.com"
-    MAIL_PASSWORD = "YOUR_APP_PASSWORD"
+    MAIL_USERNAME = "shreetika327@gmail.com"
+    MAIL_PASSWORD = "svvo kqye mvmv rshc"

@@ -4,21 +4,15 @@ db = SQLAlchemy()
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), unique=True, nullable=False)
+    username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
-    role = db.Column(db.String(20), nullable=False)  # owner / vet
+    role = db.Column(db.String(20), nullable=False) 
 
 class Appointment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    pet_name = db.Column(db.String(100))
-    owner = db.Column(db.String(100))
-    date = db.Column(db.String(20))
-    reason = db.Column(db.String(200))
+    pet_name = db.Column(db.String(100), nullable=False)
+    owner = db.Column(db.String(80), nullable=False)
+    date = db.Column(db.String(20), nullable=False)
+    reason = db.Column(db.Text, nullable=False)
+    appt_type = db.Column(db.String(20), default="General") 
     status = db.Column(db.String(20), default="Pending")
-
-class Vaccination(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    pet_name = db.Column(db.String(100))
-    vaccine = db.Column(db.String(100))
-    given_date = db.Column(db.String(20))
-    next_due = db.Column(db.String(20))
